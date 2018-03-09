@@ -1,5 +1,9 @@
 {
-  "extends": "rallycoding",
+  "extends": [
+    "standard",
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
   "rules": {
     // 行末尾不使用分号
     "semi": 0,
