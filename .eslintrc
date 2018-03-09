@@ -1,0 +1,9 @@
+{
+  "extends": "rallycoding",
+  "rules": {
+    // 行末尾不使用分号
+    "semi": 0,
+    "space-before-function-paren": 0,
+    "spaced-comment": 2
+  }
+}
