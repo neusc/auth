@@ -4,12 +4,17 @@
  * Date: 2018/3/9
  */
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
-import { Header } from './components/common'
+import { View } from 'react-native'
+import { Button, Header, Spinner } from './components/common'
 import LoginForm from './components/loginForm'
 import firebase from 'firebase'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { loggedIn: null }
+  }
+
   componentWillMount () {
     // 初始化firebase
     firebase.initializeApp({
@@ -20,13 +25,32 @@ class App extends Component {
       storageBucket: 'authentication-36419.appspot.com',
       messagingSenderId: '221991093256'
     })
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({ loggedIn: true })
+      } else {
+        this.setState({ loggedIn: false })
+      }
+    })
+  }
+
+  renderContent () {
+    switch (this.state.loggedIn) {
+      case true:
+        return <Button>Log Out</Button>
+      case false:
+        return <LoginForm />
+      default:
+        return <Spinner size="large" />
+    }
   }
 
   render () {
     return (
       <View>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this.renderContent()}
       </View>
     )
   }
